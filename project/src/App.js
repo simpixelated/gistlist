@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
+import _ from 'lodash';
 import gists from './library';
-import logo from './logo.svg';
-import './App.css';
 
 /*
 TODO:
-- [ ] A text box should be provided to enter a username.
+- [x] A text box should be provided to enter a username.
 - [ ] After entering the username, it should list the public gists for that user in summary form.The summary should contain at least the description and the date the gist was created. (Feel free to provide additional properties if you want.)
 - [ ] Clicking on a gist should open up a detail page for that gist.
 - [ ] The detail of the gist should list all the files for that gist.
@@ -15,22 +14,34 @@ TODO:
 - [ ] Some basic navigation / header should make it possible to return from a particular gist to the list of gists for a user and to perform a search for a different user, without having to refresh the browser or use the back button.It is okay if the browser’s URL doesn’t change while navigating.
 */
 
-
 class App extends Component {
-  componentDidMount() {
-    gists.getPublicGistsByUsername('brandonsotikov')
+  constructor (props) {
+    super(props);
+    this.onChangeUsername = this.onChangeUsername.bind(this);
+    this.handleSearch = _.debounce(this.handleSearch, 500);
+    this.state = {
+      username: '',
+    };
+  }
+
+  onChangeUsername = (event) => {
+    const username = event.target.value;
+    this.setState({ username });
+    if (username) {
+      this.handleSearch(username);
+    }
+  }
+
+  handleSearch (username) {
+    gists.getPublicGistsByUsername(username)
       .then(console.log);
   }
+
   render() {
+    const { username } = this.state;
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+      <div>
+        <input type="text" value={username} onChange={this.onChangeUsername} />
       </div>
     );
   }
