@@ -36,11 +36,12 @@ class App extends Component {
   handleSearch (username) {
     if (username) {
       gists.getPublicGistsByUsername(username)
-        .then(gists => {
+        .then(data => {
+          const gists = (data && data.length) ? data : [];
           this.setState({ gists });
         });
     } else {
-      this.setState({ gists: [] });
+      this.setState({ gists: [] })
     }
   }
 
