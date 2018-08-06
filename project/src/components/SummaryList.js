@@ -1,29 +1,7 @@
 import React, { Component } from 'react';
 import _ from 'lodash';
-
-const GistDetail = ({ date, description }) => (
-  <div>
-    <p>Date: {date}</p>
-    <p>Description: {description}</p>
-    <p>Files:</p>
-    <ul>
-      <li>file</li>
-    </ul>
-  </div>
-);
-
-const onClick = (id, cb) => (event) => {
-  event.preventDefault();
-  cb(id);
-};
-
-const SummaryItem = ({ id, date, description, handleClick }) => (
-  <div>
-    <p>Date: {date}</p>
-    <p>Description: {description}</p>
-    <p><a href="#" onClick={onClick(id, handleClick)}>View Details</a></p>
-  </div>
-);
+import SummaryItem from './SummaryItem';
+import GistDetail from './GistDetail';
 
 class SummaryList extends Component {
   constructor(props) {
@@ -34,13 +12,17 @@ class SummaryList extends Component {
   }
 
   onClickViewDetails = (activeGist) => this.setState({ activeGist });
+  onClickBack = (event) => {
+    event.preventDefault();
+    this.setState({ activeGist: null });
+  }
 
   render () {
     const { activeGist } = this.state;
     const { gists } = this.props;
-    console.log(activeGist, gists)
     if (activeGist) {
-      return <GistDetail gist={{ date: 'test', description: '' }} />
+      const found = _.find(gists, { id: activeGist });
+      return <GistDetail {...found} handleClickBack={this.onClickBack} />
     }
     return (
       <div>
