@@ -2,11 +2,12 @@ import React, { Component } from 'react';
 import _ from 'lodash';
 import gists from './library';
 import Search from './components/Search';
+import Summary from './components/Summary';
 
 /*
 TODO:
 - [x] A text box should be provided to enter a username.
-- [ ] After entering the username, it should list the public gists for that user in summary form.The summary should contain at least the description and the date the gist was created. (Feel free to provide additional properties if you want.)
+- [x] After entering the username, it should list the public gists for that user in summary form.The summary should contain at least the description and the date the gist was created. (Feel free to provide additional properties if you want.)
 - [ ] Clicking on a gist should open up a detail page for that gist.
 - [ ] The detail of the gist should list all the files for that gist.
 - [ ] The contents of each file in the gist must be viewable somehow, but you can decide how best to do this.You can choose whether to show links to each file in the gist, a summary view of each file that expands, or the full content of each file on the detail page, etc.However, your app must render the file contents, so do not open external links to GitHub.Otherwise, there's no right or wrong choice here, just your personal preference.
@@ -22,28 +23,33 @@ class App extends Component {
     this.handleSearch = _.debounce(this.handleSearch, 500);
     this.state = {
       username: '',
+      gists: [],
     };
   }
 
   onChangeUsername = (event) => {
     const username = event.target.value;
     this.setState({ username });
-    if (username) {
-      this.handleSearch(username);
-    }
+    this.handleSearch(username);
   }
 
   handleSearch (username) {
-    gists.getPublicGistsByUsername(username)
-      .then(console.log);
+    if (username) {
+      gists.getPublicGistsByUsername(username)
+        .then(gists => {
+          this.setState({ gists });
+        });
+    } else {
+      this.setState({ gists: [] });
+    }
   }
 
   render() {
-    const { username } = this.state;
+    const { username, gists } = this.state;
     return (
       <div>
         <Search handleChange={this.onChangeUsername} username={username} />
-
+        <Summary gists={gists} />
       </div>
     );
   }
