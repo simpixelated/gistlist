@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import _ from 'lodash';
 import gists from './library';
+import Search from './components/Search';
 
 /*
 TODO:
@@ -41,7 +42,8 @@ class App extends Component {
     const { username } = this.state;
     return (
       <div>
-        <input type="text" value={username} onChange={this.onChangeUsername} />
+        <Search handleChange={this.onChangeUsername} username={username} />
+
       </div>
     );
   }
