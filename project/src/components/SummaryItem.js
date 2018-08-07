@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 const onClick = (id, cb) => (event) => {
   event.preventDefault();
@@ -6,11 +6,11 @@ const onClick = (id, cb) => (event) => {
 };
 
 const SummaryItem = ({ id, date, description, handleClick }) => (
-  <div>
+  <li>
     <p>Date: {date}</p>
     <p>Description: {description}</p>
     <p><a href="#" onClick={onClick(id, handleClick)}>View Details</a></p>
-  </div>
+  </li>
 );
 
 export default SummaryItem;

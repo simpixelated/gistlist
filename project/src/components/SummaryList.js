@@ -3,7 +3,7 @@ import _ from 'lodash';
 import SummaryItem from './SummaryItem';
 import GistDetail from './GistDetail';
 
-class SummaryList extends Component {
+class SummaryListContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -25,20 +25,26 @@ class SummaryList extends Component {
       return <GistDetail {...found} handleClickBack={this.onClickBack} />
     }
     return (
-      <div>
-        <p>Found {gists.length} gists:</p>
-        {_.map(gists, ({ created_at, description, id }) => (
-          <SummaryItem
-            date={created_at}
-            description={description}
-            handleClick={this.onClickViewDetails}
-            id={id}
-            key={id}
-          />
-        ))}
-      </div>
+      <SummaryList gists={gists} onClickViewDetails={this.onClickViewDetails} />
     );
   }
 }
 
-export default SummaryList;
+const SummaryList = ({ gists, onClickViewDetails }) => (
+  <div>
+    <p>Found {gists.length} gists:</p>
+    <ul>
+      {_.map(gists, ({ created_at, description, id }) => (
+        <SummaryItem
+          date={created_at}
+          description={description}
+          handleClick={onClickViewDetails}
+          id={id}
+          key={id}
+        />
+      ))}
+    </ul>
+  </div>
+)
+
+export default SummaryListContainer;
