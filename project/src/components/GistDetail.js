@@ -1,5 +1,23 @@
 import React, { Component } from 'react';
 import _ from 'lodash';
+import gists from '../library';
+
+class GistDetailContainer extends Component {
+  constructor (props) {
+    super(props);
+    this.state = {
+      files: props.files,
+    };
+  }
+  componentDidMount () {
+    gists.getGistById(this.props.id)
+      .then(gist => this.setState({ files: gist.files }));
+  }
+
+  render () {
+    return (<GistDetail {...this.props} files={this.state.files} />);
+  }
+}
 
 const GistDetail = ({ created_at, description, files, handleClickBack }) => (
   <div>
@@ -8,9 +26,14 @@ const GistDetail = ({ created_at, description, files, handleClickBack }) => (
     <p>Description: {description}</p>
     <p>Files:</p>
     <ul>
-      {_.map(files, (files, filename) => <li key={filename}>{filename}</li>)}
+      {_.map(files, (file, filename) => (
+        <li key={filename}>
+          {filename}
+          {file.content && <pre>{file.content}</pre>}
+        </li>
+      ))}
     </ul>
   </div>
 );
 
-export default GistDetail;
+export default GistDetailContainer;
