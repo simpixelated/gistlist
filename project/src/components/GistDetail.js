@@ -14,12 +14,24 @@ class GistDetailContainer extends Component {
       .then(gist => this.setState({ files: gist.files }));
   }
 
+  handleClickFavorite = (file) => (event) => {
+    event.preventDefault();
+    this.props.handleClickFavorite(file);
+  }
+
   render () {
-    return (<GistDetail {...this.props} files={this.state.files} />);
+    return (<GistDetail {...this.props} files={this.state.files} onClickFavorite={this.handleClickFavorite} />);
   }
 }
 
-const GistDetail = ({ created_at, description, files, handleClickBack }) => (
+const GistDetail = ({
+  created_at,
+  description,
+  files,
+  handleClickBack,
+  onClickFavorite,
+  favorites,
+}) => (
   <div>
     <p><a href="#" onClick={handleClickBack}>&laquo; go back</a></p>
     <p>Date: {created_at}</p>
@@ -28,7 +40,10 @@ const GistDetail = ({ created_at, description, files, handleClickBack }) => (
     <ul>
       {_.map(files, (file, filename) => (
         <li key={filename}>
-          {filename}
+          <p>
+            {filename}
+              <a href="#" onClick={onClickFavorite(file)}>{_.some(favorites, { filename: filename }) ? 'unfavorite' : 'favorite'}</a>
+          </p>
           {file.content && <pre>{file.content}</pre>}
         </li>
       ))}

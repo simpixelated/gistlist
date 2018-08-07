@@ -8,13 +8,13 @@ const handleSuccess = (response) => response.json();
 export default {
   // should provide a function that, given a username, retrieves the public gists for that particular user.
   getPublicGistsByUsername: (username) => {
-    return fetch(`${url}/users/${username}/gists`)
+    return fetch(`${urlProxy}/users/${username}/gists`)
       .then(handleSuccess)
       .catch(handleError);
   },
   // should provide a function that, given a gist ID, retrieves a specific gist.
   getGistById: (id) => {
-    return fetch(`${url}/gists/${id}`)
+    return fetch(`${urlProxy}/gists/${id}`)
       .then(handleSuccess)
       .catch(handleError);
   }
