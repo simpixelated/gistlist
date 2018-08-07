@@ -1,0 +1,14 @@
+.summary-item {
+  border-bottom: 1px dotted gray;
+  list-style: none;
+  padding: 10px;
+}
+
+.summary-item:hover {
+  cursor: pointer;
+  background: #dad9d9
+}
+
+.summary-item p {
+  margin: 5px;
+}

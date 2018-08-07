@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import _ from 'lodash';
 import gists from '../library';
+import FileDetail from './FileDetail';
 
 class GistDetailContainer extends Component {
   constructor (props) {
@@ -33,19 +34,18 @@ const GistDetail = ({
   favorites,
 }) => (
   <div>
-    <p><a href="#" onClick={handleClickBack}>&laquo; go back</a></p>
+    <p><button onClick={handleClickBack}>&laquo; go back</button></p>
     <p>Date: {created_at}</p>
     <p>Description: {description}</p>
     <p>Files:</p>
     <ul>
-      {_.map(files, (file, filename) => (
-        <li key={filename}>
-          <p>
-            {filename}
-              <a href="#" onClick={onClickFavorite(file)}>{_.some(favorites, { filename: filename }) ? 'unfavorite' : 'favorite'}</a>
-          </p>
-          {file.content && <pre>{file.content}</pre>}
-        </li>
+      {_.map(files, (file) => (
+        <FileDetail
+          favoriteLabel={_.some(favorites, { filename: file.filename }) ? 'unfavorite' : 'favorite'}
+          onClickFavorite={onClickFavorite(file)}
+          file={file}
+          key={file.filename}
+        />
       ))}
     </ul>
   </div>
