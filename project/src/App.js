@@ -21,12 +21,10 @@ class App extends Component {
   }
 
   handleSearch = (username) => {
+    // prevent calling API without a username
     if (username) {
       gists.getPublicGistsByUsername(username)
-        .then(data => {
-          const gists = (data && data.length) ? data : [];
-          this.setState({ gists });
-        });
+        .then(data => this.setState({ gists: (data && data.length) ? data : [] }));
     } else {
       this.setState({ gists: [] })
     }

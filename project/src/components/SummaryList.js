@@ -14,17 +14,16 @@ class SummaryListContainer extends Component {
   }
 
   onClickViewDetails = (activeGist) => this.setState({ activeGist });
+
   onClickBack = (event) => {
     event.preventDefault();
     this.setState({ activeGist: null });
   }
+
+  // toggle by removing from favorites if already present
   onClickFavorite = (file) => {
     let { favorites } = this.state;
-    if (_.find(favorites, file)) {
-      favorites = _.reject(favorites, file);
-    } else {
-      favorites = [...favorites, file];
-    }
+    favorites = _.find(favorites, file) ? _.reject(favorites, file) : [...favorites, file];
     this.setState({ favorites });
   }
 

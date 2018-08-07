@@ -11,6 +11,7 @@ class GistDetailContainer extends Component {
     };
   }
   componentDidMount () {
+    // we already have the gist, but this hydrates it with more data, namely "files[].content"
     gists.getGistById(this.props.id)
       .then(gist => this.setState({ files: gist.files }));
   }
