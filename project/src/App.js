@@ -7,7 +7,6 @@ import SummaryList from './components/SummaryList';
 class App extends Component {
   constructor (props) {
     super(props);
-    this.onChangeUsername = this.onChangeUsername.bind(this);
     this.handleSearch = _.debounce(this.handleSearch, 500);
     this.state = {
       username: '',
@@ -21,7 +20,7 @@ class App extends Component {
     this.handleSearch(username);
   }
 
-  handleSearch (username) {
+  handleSearch = (username) => {
     if (username) {
       gists.getPublicGistsByUsername(username)
         .then(data => {
@@ -34,11 +33,11 @@ class App extends Component {
   }
 
   render() {
-    const { username, gists, favorites } = this.state;
+    const { username, gists } = this.state;
     return (
       <div>
         <Search handleChange={this.onChangeUsername} username={username} />
-        <SummaryList gists={gists} favorites={favorites} />
+        <SummaryList gists={gists} />
       </div>
     );
   }

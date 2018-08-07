@@ -43,20 +43,25 @@ class SummaryListContainer extends Component {
       );
     }
     return (
-      <SummaryList gists={gists} onClickViewDetails={this.onClickViewDetails} />
+      <SummaryList
+        gists={gists}
+        onClickViewDetails={this.onClickViewDetails}
+        favorites={favorites}
+      />
     );
   }
 }
 
-const SummaryList = ({ gists, onClickViewDetails }) => (
+const SummaryList = ({ gists, onClickViewDetails, favorites }) => (
   <div>
     <p>Found {gists.length} gists:</p>
     <ul className="summary-list">
-      {_.map(gists, ({ created_at, description, id }) => (
+      {_.map(gists, ({ created_at, description, id, files }) => (
         <SummaryItem
           date={created_at}
           description={description}
           handleClick={onClickViewDetails}
+          faveCount={_.filter(files, ({ filename }) => _.find(favorites, { filename })).length}
           id={id}
           key={id}
         />
