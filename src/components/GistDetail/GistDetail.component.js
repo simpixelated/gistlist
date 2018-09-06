@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import _ from 'lodash';
 import FileDetail from '../FileDetail';
 
@@ -27,5 +28,14 @@ const GistDetail = ({
     </ul>
   </div>
 );
+
+GistDetail.propTypes = {
+  created_at: PropTypes.string,
+  description: PropTypes.string,
+  files: PropTypes.object,
+  handleClickBack: PropTypes.func,
+  onClickFavorite: PropTypes.func,
+  favorites: PropTypes.array,
+};
 
 export default GistDetail;

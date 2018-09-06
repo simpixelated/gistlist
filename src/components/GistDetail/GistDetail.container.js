@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import gists from '../../library';
 import GistDetail from './GistDetail.component';
 
@@ -24,5 +25,9 @@ class GistDetailContainer extends Component {
     return (<GistDetail {...this.props} files={this.state.files} onClickFavorite={this.handleClickFavorite} />);
   }
 }
+
+GistDetailContainer.propTypes = {
+  id: PropTypes.string,
+};
 
 export default GistDetailContainer;

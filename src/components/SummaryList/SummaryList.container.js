@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import _ from 'lodash';
 import SummaryList from './SummaryList.component';
 import GistDetail from '../GistDetail';
@@ -50,5 +51,9 @@ class SummaryListContainer extends Component {
     );
   }
 }
+
+SummaryListContainer.propTypes = {
+  gists: PropTypes.array,
+};
 
 export default SummaryListContainer;

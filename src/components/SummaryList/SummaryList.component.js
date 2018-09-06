@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import _ from 'lodash';
 import SummaryItem from '../SummaryItem';
 
@@ -18,6 +19,12 @@ const SummaryList = ({ gists, onClickViewDetails, favorites }) => (
       ))}
     </ul>
   </div>
-)
+);
+
+SummaryList.propTypes = {
+  gists: PropTypes.array,
+  onClickViewDetails: PropTypes.func,
+  favorites: PropTypes.array,
+};
 
 export default SummaryList;
