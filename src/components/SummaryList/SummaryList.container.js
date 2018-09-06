@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import _ from 'lodash';
-import SummaryItem from './SummaryItem';
-import GistDetail from './GistDetail';
+import SummaryList from './SummaryList.component';
+import GistDetail from '../GistDetail';
 import './SummaryList.css';
 
 class SummaryListContainer extends Component {
@@ -50,23 +50,5 @@ class SummaryListContainer extends Component {
     );
   }
 }
-
-const SummaryList = ({ gists, onClickViewDetails, favorites }) => (
-  <div>
-    <p>Found {gists.length} gists:</p>
-    <ul className="summary-list">
-      {_.map(gists, ({ created_at, description, id, files }) => (
-        <SummaryItem
-          date={created_at}
-          description={description}
-          handleClick={onClickViewDetails}
-          faveCount={_.filter(files, ({ filename }) => _.find(favorites, { filename })).length}
-          id={id}
-          key={id}
-        />
-      ))}
-    </ul>
-  </div>
-)
 
 export default SummaryListContainer;
