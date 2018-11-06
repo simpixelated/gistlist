@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import _ from 'lodash';
-import gists from '../library';
-import FileDetail from './FileDetail';
+import PropTypes from 'prop-types';
+import gists from '../../library';
+import GistDetail from './GistDetail.component';
 
 class GistDetailContainer extends Component {
   constructor (props) {
@@ -26,30 +26,8 @@ class GistDetailContainer extends Component {
   }
 }
 
-const GistDetail = ({
-  created_at,
-  description,
-  files,
-  handleClickBack,
-  onClickFavorite,
-  favorites,
-}) => (
-  <div>
-    <p><button onClick={handleClickBack}>&laquo; go back</button></p>
-    <p>Date: {created_at}</p>
-    <p>Description: {description}</p>
-    <p>Files:</p>
-    <ul>
-      {_.map(files, (file) => (
-        <FileDetail
-          favoriteLabel={_.some(favorites, { filename: file.filename }) ? 'unfavorite' : 'favorite'}
-          onClickFavorite={onClickFavorite(file)}
-          file={file}
-          key={file.filename}
-        />
-      ))}
-    </ul>
-  </div>
-);
+GistDetailContainer.propTypes = {
+  id: PropTypes.string,
+};
 
 export default GistDetailContainer;
